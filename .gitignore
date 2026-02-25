@@ -1,0 +1,11 @@
+# Node-RED credentials (contains secrets)
+node-red/flows_cred.json
+
+# Docker volumes / databases
+*/data/*
+*/log/*
+grafana.db
+
+# OS
+*.swp
+.DS_Store

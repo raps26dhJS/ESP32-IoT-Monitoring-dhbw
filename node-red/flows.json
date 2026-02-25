@@ -1,0 +1,584 @@
+[
+    {
+        "id": "2a34cf694bad10bc",
+        "type": "tab",
+        "label": "Vis_Flow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f79ad36812f945fe",
+        "type": "tab",
+        "label": "Ampel-Logik",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f9cf948f48628b7c",
+        "type": "tab",
+        "label": "Alarme",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "344d87708cac5bac",
+        "type": "mqtt-broker",
+        "name": "Mosquitto local",
+        "broker": "192.168.0.107",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f3dfaf9c97eff4f1",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.0.107:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f2e4f5214825e7bb",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.0.107:8086",
+        "timeout": 10,
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "c509eaa21198ba41",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "DHT11-test",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.0.107:1880",
+        "timeout": 10,
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "9a9a8c84b367bac4",
+        "type": "mqtt in",
+        "z": "2a34cf694bad10bc",
+        "name": "ESP32 DHT11 MQTT IN",
+        "topic": "sensors/esp32/dht11",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "344d87708cac5bac",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "e2ad019f1107ff12",
+                "133898bbf470ef89",
+                "31fd070c13c51cd8"
+            ]
+        ]
+    },
+    {
+        "id": "172d4436aa71da7a",
+        "type": "influxdb out",
+        "z": "2a34cf694bad10bc",
+        "influxdb": "f3dfaf9c97eff4f1",
+        "name": "",
+        "measurement": "DHT11_ESP32_01",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "home",
+        "bucket": "iot",
+        "x": 990,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "a84531d476f9cca8",
+        "type": "function",
+        "z": "2a34cf694bad10bc",
+        "name": "Logik_Funktion",
+        "func": "let p = msg.payload;\n\n// falls String -> in JSON wandeln\nif (typeof p === \"string\") {\n  try {\n    p = JSON.parse(p);\n  } catch (e) {\n    node.warn(\"Payload ist kein gültiges JSON: \" + p);\n    return null;\n  }\n}\n\nconst t = Number(p.temp);\nconst h = Number(p.hum);\n\nif (!Number.isFinite(t) || !Number.isFinite(h)) {\n  node.warn(`Invalid values -> temp=${p.temp}, hum=${p.hum}`);\n  return null;\n}\n\nmsg.payload = {\n  temperature: t,\n  humidity: h\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 360,
+        "wires": [
+            [
+                "172d4436aa71da7a",
+                "395ad17622b1f4d3",
+                "1da6d7d50aca24eb"
+            ]
+        ]
+    },
+    {
+        "id": "e2ad019f1107ff12",
+        "type": "json",
+        "z": "2a34cf694bad10bc",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 470,
+        "y": 360,
+        "wires": [
+            [
+                "a84531d476f9cca8",
+                "8ae1d87fc83ad216"
+            ]
+        ]
+    },
+    {
+        "id": "395ad17622b1f4d3",
+        "type": "debug",
+        "z": "2a34cf694bad10bc",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "133898bbf470ef89",
+        "type": "debug",
+        "z": "2a34cf694bad10bc",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "8ae1d87fc83ad216",
+        "type": "debug",
+        "z": "2a34cf694bad10bc",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "31fd070c13c51cd8",
+        "type": "link out",
+        "z": "2a34cf694bad10bc",
+        "name": "Messungen_DHT11",
+        "mode": "link",
+        "links": [
+            "4dd0d3467a9bc277"
+        ],
+        "x": 485,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1da6d7d50aca24eb",
+        "type": "function",
+        "z": "2a34cf694bad10bc",
+        "name": "InfluxDB Format",
+        "func": "// InfluxDB v2 Out erwartet folgendes:\n\nmsg.measurement = \"climate\";         \nmsg.tags = { room: \"office\" };        \n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 240,
+        "wires": [
+            [
+                "21992fee99196808",
+                "610d19b4b48a1a4c"
+            ]
+        ]
+    },
+    {
+        "id": "21992fee99196808",
+        "type": "influxdb out",
+        "z": "2a34cf694bad10bc",
+        "influxdb": "f3dfaf9c97eff4f1",
+        "name": "",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "home",
+        "bucket": "iot",
+        "x": 1090,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "610d19b4b48a1a4c",
+        "type": "debug",
+        "z": "2a34cf694bad10bc",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4dd0d3467a9bc277",
+        "type": "link in",
+        "z": "f79ad36812f945fe",
+        "name": "Messungen_DHT11_In",
+        "links": [
+            "31fd070c13c51cd8"
+        ],
+        "x": 145,
+        "y": 420,
+        "wires": [
+            [
+                "6c578f888c432469",
+                "adaca8187273e17b"
+            ]
+        ]
+    },
+    {
+        "id": "adaca8187273e17b",
+        "type": "function",
+        "z": "f79ad36812f945fe",
+        "name": "Function: Compute advice + traffic",
+        "func": "/*\n  ----------------------------------------------------\n  Function Node: Compute advice + traffic\n  Ziel:\n  - Aus den Messwerten Temperatur (temp) und relativer Feuchte (hum) wird eine Ampel (traffic) abgebildet.\n  - Die Bewertung erfolgt ausschließlich über Grenzwerte (Momentanwerte der Messungen).\n\n  Ampel-Definition:\n  - Rot (Alarm):    temp < 16 °C  ODER  hum > 70 %\n  - Gelb (Warnung): 16 °C <= temp <= 18 °C  ODER  60 % <= hum <= 70 %\n  - Grün (OK):      else\n\n  Hinweis:\n  - Der letzte Ampelzustand wird zusätzlich in flow.lastTraffic gespeichert.\n    Dadurch kann der 60s-Inject im Accumulate-Node richtig weiterzählen.\n  ----------------------------------------------------\n*/\n\nconst now = Date.now(); // Zeitstempel\n\n// ----------------------------------------------------\n// 1) Eingangsdaten einlesen und validieren\n//    \n// ----------------------------------------------------\nconst temp = Number(msg.payload.temp);\nconst hum = Number(msg.payload.hum);\n\nif (!Number.isFinite(temp) || !Number.isFinite(hum)) {\n  \n  return null;\n}\n\n// ----------------------------------------------------\n// 2) Testmodus: Ampelzustand forcen\n// ----------------------------------------------------\nconst TEST_MODE = false;   // bei Bedarf auf true setzen\nconst FORCE = 1;           // 0=grün, 1=gelb, 2=rot\n\nif (TEST_MODE) {\n  msg.payload = {\n    room: \"office\",\n    temp_c: temp,\n    hum_pct: hum,\n\n    // Felder bleiben bewusst bestehen\n    advice_ventilate: 0,\n    advice_heat: 0,\n\n    traffic: FORCE,\n    traffic_text: [\"green\", \"yellow\", \"red\"][FORCE] || \"green\",\n    reason: FORCE === 1 ? \"TEST_YELLOW\" : (FORCE === 2 ? \"TEST_RED\" : \"TEST_GREEN\")\n  };\n\n  // lastTraffic wird gesetzt, damit Accumulate durations sauber weiterzählt\n  flow.set(\"lastTraffic\", FORCE);\n\n  return msg;\n}\n\n// ----------------------------------------------------\n// 3) Ampelzustand aus Grenzwerten bestimmen\n// ----------------------------------------------------\nlet traffic = 0;  // 0=grün, 1=gelb, 2=rot\n\n// Rot: Alarm, wenn Temperatur zu niedrig oder Luftfeuchte zu hoch\nif (temp < 17 || hum > 70) {\n  traffic = 2;\n}\n\n// Gelb: Warnbereich für Temperatur oder Luftfeuchte\nelse if ((temp >= 17 && temp <= 18.9) || (hum > 60 && hum <= 70)) {\n  traffic = 1;\n}\n\n// Grün: sonst keine Auffälligkeit\nelse {\n  traffic = 0;\n}\n\nconst trafficText = [\"green\", \"yellow\", \"red\"][traffic];\n\n// ----------------------------------------------------\n// 4) Zustand für nachgelagerte Zeitakkumulation speichern\n// ----------------------------------------------------\nflow.set(\"lastTraffic\", traffic);\n\n// ----------------------------------------------------\n// 5) Ausgabeformat für InfluxDB / Grafana\n//    - msg.tags wird als Tag-Set genutzt (z. B. room=office)\n//    - msg.payload enthält Felder (Fields)\n// ----------------------------------------------------\nmsg.tags = { room: \"office\" };\n\nmsg.payload = {\n  room: \"office\",\n  temp_c: temp,\n  hum_pct: hum,\n\n  // werden aktuell nicht mehr logisch berechnet, bleiben aber als kompatible Felder erhalten\n  advice_ventilate: 0,\n  advice_heat: 0,\n\n  traffic: traffic,\n  traffic_text: trafficText,\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "a1a0c926b097ec6d",
+                "6aa03f5adfcd4d29",
+                "21e94f1ec8c43849",
+                "bea0f4e985fdd463"
+            ]
+        ]
+    },
+    {
+        "id": "a1a0c926b097ec6d",
+        "type": "influxdb out",
+        "z": "f79ad36812f945fe",
+        "influxdb": "f3dfaf9c97eff4f1",
+        "name": "",
+        "measurement": "climate_logic",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "home",
+        "bucket": "iot",
+        "x": 770,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "6aa03f5adfcd4d29",
+        "type": "function",
+        "z": "f79ad36812f945fe",
+        "name": "Function: Accumulate durations",
+        "func": "// ----------------------------------------------------\n// Aufsummierung der Zeitanteile je Ampelzustand (grün / gelb / rot)\n// - Sensordaten: msg.payload.traffic (0 = grün, 1 = gelb, 2 = rot)\n// - 60-Sekunden-Injects: kein traffic-Wert → letzter Zustand wird weiterverwendet\n// - dauerhafte Speicherung über den Datei-Context von Node-RED (bleibt nach Neustart erhalten)\n// ----------------------------------------------------\n\nconst STORE = \"file\";   // dauerhafter Context-Store (Speicherung auf SD-Karte)\nconst MAX_GAP_S = 120;  // Maximale Zeitlücke: längere Ausfälle werden nicht nachgezählt\n\nconst nowMs = Date.now();\nconst nowDate = new Date(nowMs);\n\n// ---------- Ermittlung und Validierung des Ampelzustands ----------\nlet traffic = (msg.payload && typeof msg.payload.traffic === \"number\")\n  ? msg.payload.traffic\n  : flow.get(\"lastTraffic\", STORE);\n\nif (traffic === undefined || traffic === null) traffic = 0;\ntraffic = Number(traffic);\nif (!Number.isFinite(traffic)) traffic = 0;\n\n// Begrenzung auf gültige Zustände: 0 = grün, 1 = gelb, 2 = rot\ntraffic = Math.max(0, Math.min(2, Math.trunc(traffic)));\n\n// ---------- Laden des fest gespeicherten Zustands ----------\nlet state = flow.get(\"trafficStats\", STORE);\nif (!state || typeof state !== \"object\") {\n  state = {\n    lastTs: nowMs,\n    lastTraffic: traffic,\n\n    // Tageszähler in Sekunden: [grün, gelb, rot]\n    today: [0, 0, 0],\n\n    // Wochenzähler in Sekunden: [grün, gelb, rot]\n    week: [0, 0, 0],\n\n    // Referenz für aktuellen Tag und aktuelle Kalenderwoche (lokale Zeit)\n    dayKey: getLocalDayKey(nowDate),\n    weekKey: getWeekKeyLocal(nowDate)\n  };\n}\n\n// ---------- Zeitdifferenz seit letztem Zyklus ----------\nlet dt = Math.floor((nowMs - Number(state.lastTs || nowMs)) / 1000);\nif (dt < 0) dt = 0;\n\n// Bei längerer Abschaltung wird keine zusätzliche Zeit aufaddiert\nif (dt > MAX_GAP_S) dt = 0;\n\n// ---------- Prüfung auf Tages- und Wochenwechsel ----------\nconst currentDay = getLocalDayKey(nowDate);\nif (currentDay !== state.dayKey) {\n  state.today = [0, 0, 0];\n  state.dayKey = currentDay;\n}\n\nconst currentWeek = getWeekKeyLocal(nowDate);\nif (currentWeek !== state.weekKey) {\n  state.week = [0, 0, 0];\n  state.weekKey = currentWeek;\n}\n\n// ---------- Aufsummierung der Zeit für den zuletzt aktiven Zustand ----------\nconst idx = Number(state.lastTraffic);\nif (idx === 0 || idx === 1 || idx === 2) {\n  state.today[idx] += dt;\n  state.week[idx] += dt;\n}\n\n// ---------- Aktualisierung des Systemzustands ----------\nstate.lastTs = nowMs;\nstate.lastTraffic = traffic;\n\n// ---------- Persistente Speicherung ----------\nflow.set(\"trafficStats\", state, STORE);\nflow.set(\"lastTraffic\", traffic, STORE);\n\n// ---------- Ausgabe für Speicherung in InfluxDB ----------\nmsg.payload = {\n  green_s_today: state.today[0],\n  yellow_s_today: state.today[1],\n  red_s_today: state.today[2],\n\n  green_s_week: state.week[0],\n  yellow_s_week: state.week[1],\n  red_s_week: state.week[2],\n\n  day: state.dayKey,\n  week: state.weekKey\n};\n\nmsg.tags = { room: \"office\", app: \"climate\" }; // Metadaten für InfluxDB\ndelete msg.payload.room; // Vermeidung doppelter Feldspeicherung\n\nreturn msg;\n\n// ----------------------------------------------------\n// Hilfsfunktionen\n// ----------------------------------------------------\n\n// Erzeugt einen Tages-Schlüssel im lokalen Zeitformat (YYYY-MM-DD)\nfunction getLocalDayKey(d) {\n  const y = d.getFullYear();\n  const m = String(d.getMonth() + 1).padStart(2, \"0\");\n  const day = String(d.getDate()).padStart(2, \"0\");\n  return `${y}-${m}-${day}`;\n}\n\n// Ermittelt die ISO-Kalenderwoche auf Basis lokaler Zeit (Wochenstart: Montag)\nfunction getWeekKeyLocal(d) {\n  const date = new Date(d.getFullYear(), d.getMonth(), d.getDate());\n  const dayNum = date.getDay() || 7;\n  date.setDate(date.getDate() + 4 - dayNum);\n  const yearStart = new Date(date.getFullYear(), 0, 1);\n  const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);\n  return `${date.getFullYear()}-W${weekNo}`;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 4,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 340,
+        "wires": [
+            [
+                "780f665c65d34f81",
+                "246f8fc6e59abcde"
+            ]
+        ]
+    },
+    {
+        "id": "780f665c65d34f81",
+        "type": "influxdb out",
+        "z": "f79ad36812f945fe",
+        "influxdb": "f3dfaf9c97eff4f1",
+        "name": "climate_stats",
+        "measurement": "climate_stats",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "home",
+        "bucket": "iot",
+        "x": 1270,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6c578f888c432469",
+        "type": "debug",
+        "z": "f79ad36812f945fe",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "51326c091b7add80",
+        "type": "inject",
+        "z": "f79ad36812f945fe",
+        "name": "60-sec_Inject",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 680,
+        "y": 140,
+        "wires": [
+            [
+                "6aa03f5adfcd4d29"
+            ]
+        ]
+    },
+    {
+        "id": "21e94f1ec8c43849",
+        "type": "debug",
+        "z": "f79ad36812f945fe",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "246f8fc6e59abcde",
+        "type": "debug",
+        "z": "f79ad36812f945fe",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "bea0f4e985fdd463",
+        "type": "link out",
+        "z": "f79ad36812f945fe",
+        "name": "Email-Notification",
+        "mode": "link",
+        "links": [
+            "30d238ca073159af"
+        ],
+        "x": 875,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "9dc85af3717fac26",
+        "type": "http in",
+        "z": "f9cf948f48628b7c",
+        "name": "",
+        "url": "/grafana-alert",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 490,
+        "y": 340,
+        "wires": [
+            [
+                "973aa58b4f9634bb",
+                "ecc64e7b0cd33133"
+            ]
+        ]
+    },
+    {
+        "id": "973aa58b4f9634bb",
+        "type": "debug",
+        "z": "f9cf948f48628b7c",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ecc64e7b0cd33133",
+        "type": "http response",
+        "z": "f9cf948f48628b7c",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 790,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b7055889e98765d3",
+        "type": "function",
+        "z": "f9cf948f48628b7c",
+        "name": "Email-Versand",
+        "func": "// Erwartet: msg.payload.traffic (0=Grün, 1=Gelb, 2=rot)\n// Optional: msg.payload.temp_c, msg.payload.hum_pct\n// Ziel: E-Mail NUR bei Zustandswechsel senden \n\nconst t = Number(msg.payload?.traffic);\nif (!Number.isFinite(t)) return null;     // ohne gültige Ampelstufe keine Aktion\n\n// Letzten versendeten Zustand aus dem Flow-Context lesen\nconst last = flow.get(\"lastTrafficMail\");\nconst lastVal = (last === undefined || last === null) ? -1 : Number(last);\n\n// Wenn keine Änderung: nichts senden\nif (t === lastVal) return null;\n\n// Neuen Zustand merken (damit beim nächsten Mal verglichen werden kann)\nflow.set(\"lastTrafficMail\", t);\n\n// Messwerte für den Mailtext (optional, aber hilfreich)\nconst temp = Number(msg.payload?.temp_c);\nconst hum = Number(msg.payload?.hum_pct);\n\n// Werte sinnvoll darstellen (falls mal NaN -> \"n/a\")\nconst tempText = Number.isFinite(temp) ? `${temp.toFixed(1)} °C` : \"n/a\";\nconst humText = Number.isFinite(hum) ? `${hum.toFixed(0)} %` : \"n/a\";\n\n// Ampeltext für Betreff und Body\nconst stateText =\n    (t === 2) ? \"ROT (ALARM)\" :\n        (t === 1) ? \"GELB (WARNUNG)\" :\n            \"GRÜN (OK)\";\n\n// Optional: nur GELB/ROT senden (GRÜN wird nur intern gemerkt)\nif (t === 0) return null;\n\n// Betreff + Body für Email-Node setzen\nmsg.topic = `[Office Klima] ${stateText}`;   // Betreff\nmsg.payload =\n    `Statuswechsel erkannt: ${stateText}\nZeit: ${new Date().toLocaleString(\"de-DE\")}\nTemperatur: ${tempText}\nLuftfeuchte: ${humText}`;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 620,
+        "wires": [
+            [
+                "8668d5a9a9f25061"
+            ]
+        ]
+    },
+    {
+        "id": "8668d5a9a9f25061",
+        "type": "e-mail",
+        "z": "f9cf948f48628b7c",
+        "server": "smtp.web.de",
+        "port": "587",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": false,
+        "tls": true,
+        "name": "studienarbeit-loradhbw@web.de",
+        "dname": "",
+        "x": 1010,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "30d238ca073159af",
+        "type": "link in",
+        "z": "f9cf948f48628b7c",
+        "name": "link in 1",
+        "links": [
+            "bea0f4e985fdd463"
+        ],
+        "x": 235,
+        "y": 620,
+        "wires": [
+            [
+                "b7055889e98765d3"
+            ]
+        ]
+    }
+]

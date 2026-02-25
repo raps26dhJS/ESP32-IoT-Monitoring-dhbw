@@ -1,0 +1,302 @@
+[
+    {
+        "Id": "d161084782bff7d7f1ad15dfa8d71060e7e1a2f880a26d88a152a400ad2e3b03",
+        "Created": "2026-01-22T14:56:58.757067871Z",
+        "Path": "./entrypoint.sh",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 1797,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-02-10T23:33:03.438736244Z",
+            "FinishedAt": "2026-02-10T23:33:00.531545913Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-02-25T20:41:41.124142889+01:00",
+                        "End": "2026-02-25T20:41:41.408616725+01:00",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-02-25T20:42:11.412139504+01:00",
+                        "End": "2026-02-25T20:42:11.681862568+01:00",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-02-25T20:42:41.683631795+01:00",
+                        "End": "2026-02-25T20:42:41.920912347+01:00",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-02-25T20:43:11.923452477+01:00",
+                        "End": "2026-02-25T20:43:12.191708586+01:00",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-02-25T20:43:42.193473522+01:00",
+                        "End": "2026-02-25T20:43:42.462086728+01:00",
+                        "ExitCode": 0,
+                        "Output": ""
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:41d0985765046e18be11ccc18e839d3d4c09ba122a85ebec96aaa8f77bae0384",
+        "ResolvConfPath": "/var/lib/docker/containers/d161084782bff7d7f1ad15dfa8d71060e7e1a2f880a26d88a152a400ad2e3b03/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/d161084782bff7d7f1ad15dfa8d71060e7e1a2f880a26d88a152a400ad2e3b03/hostname",
+        "HostsPath": "/var/lib/docker/containers/d161084782bff7d7f1ad15dfa8d71060e7e1a2f880a26d88a152a400ad2e3b03/hosts",
+        "LogPath": "/var/lib/docker/containers/d161084782bff7d7f1ad15dfa8d71060e7e1a2f880a26d88a152a400ad2e3b03/d161084782bff7d7f1ad15dfa8d71060e7e1a2f880a26d88a152a400ad2e3b03-json.log",
+        "Name": "/nodered",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "nodered_nodered_data:/data:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "nodered_default",
+            "PortBindings": {
+                "1880/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "1880"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "nodered_nodered_data",
+                "Source": "/var/lib/docker/volumes/nodered_nodered_data/_data",
+                "Destination": "/data",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "d161084782bf",
+            "Domainname": "",
+            "User": "node-red",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "1880/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "TZ=Europe/Berlin",
+                "PATH=/usr/src/node-red/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NODE_VERSION=20.19.6",
+                "YARN_VERSION=1.22.22",
+                "NODE_RED_VERSION=v4.1.3",
+                "NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules",
+                "FLOWS=flows.json"
+            ],
+            "Cmd": null,
+            "Healthcheck": {
+                "Test": [
+                    "CMD-SHELL",
+                    "node /healthcheck.js"
+                ]
+            },
+            "Image": "nodered/node-red:latest",
+            "Volumes": null,
+            "WorkingDir": "/usr/src/node-red",
+            "Entrypoint": [
+                "./entrypoint.sh"
+            ],
+            "Labels": {
+                "authors": "Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan",
+                "com.docker.compose.config-hash": "7ff1786807428b4a16f095efc4802ebca51a9617fe0e26480440f329fefcb1f2",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:41d0985765046e18be11ccc18e839d3d4c09ba122a85ebec96aaa8f77bae0384",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "nodered",
+                "com.docker.compose.project.config_files": "/data/compose/1/docker-compose.yml",
+                "com.docker.compose.project.working_dir": "/data/compose/1",
+                "com.docker.compose.service": "nodered",
+                "com.docker.compose.version": "",
+                "org.label-schema.arch": "",
+                "org.label-schema.build-date": "2026-01-07T16:45:44Z",
+                "org.label-schema.description": "Low-code programming for event-driven applications.",
+                "org.label-schema.docker.dockerfile": ".docker/Dockerfile.alpine",
+                "org.label-schema.license": "Apache-2.0",
+                "org.label-schema.name": "Node-RED",
+                "org.label-schema.url": "https://nodered.org",
+                "org.label-schema.vcs-ref": "",
+                "org.label-schema.vcs-type": "Git",
+                "org.label-schema.vcs-url": "https://github.com/node-red/node-red-docker",
+                "org.label-schema.version": "4.1.3",
+                "org.opencontainers.image.source": "https://github.com/node-red/node-red-docker"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "16485606cb9366c8ffb3c9efb698b7c15acd90b1b6e70c51f21dad0bf8e40925",
+            "SandboxKey": "/var/run/docker/netns/16485606cb93",
+            "Ports": {
+                "1880/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "1880"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "1880"
+                    }
+                ]
+            },
+            "Networks": {
+                "nodered_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "nodered",
+                        "nodered"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "bbcf07ab5c0ae69ee2180e69ad770836a9caa9cd3b74a735e991289bec4ad4ed",
+                    "EndpointID": "03f5dabbb1a96c821ac36cb059c33ca973608730b11e6f1c6e8092703c3f5b29",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "MacAddress": "72:ce:b9:e5:c7:38",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "nodered",
+                        "d161084782bf"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:522580cf1589c369c0f798ee79536148720dfd095224e911fef4fdd049abfaca",
+            "size": 3516,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]
