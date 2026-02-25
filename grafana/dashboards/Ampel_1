@@ -1,0 +1,471 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 5,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cfaymyvszcpoge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "Ampelstatus",
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "dark-green",
+                  "index": 0,
+                  "text": "Grün --> OK"
+                },
+                "1": {
+                  "color": "yellow",
+                  "index": 1,
+                  "text": "Gelb --> Warnung"
+                },
+                "2": {
+                  "color": "dark-red",
+                  "index": 2,
+                  "text": "Rot --> Alarm"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 2,
+          "min": 0,
+          "noValue": "Keine Daten",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-yellow",
+                "value": 1
+              },
+              {
+                "color": "dark-red",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 16,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 90
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r._measurement == \"climate_logic\")\r\n  |> filter(fn: (r) => r._field == \"traffic\")\r\n  |> last()\r\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "refId": "B"
+        }
+      ],
+      "title": "Raumklima-Ampel",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cfaymyvszcpoge"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 13,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# Ampelsystem\n\n- Ampel springt je nach Temp/ Hum auf\nGrün - Gelb - Rot\n\n- Ampelphasen / Tag \n==> Akkumulierte Zeiträume der Grenzwerte pro Tag\n\n\n- Ampelphasen / Woche\n==> Akkumulierte Zeiträume der Grenzwerte pro Woche",
+        "mode": "markdown"
+      },
+      "pluginVersion": "10.4.2",
+      "title": "Erläuterungen",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cfaymyvszcpoge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dtdurations"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "green_s_today"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Grün heute"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "yellow_s_today"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Gelb heute"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "red_s_today"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Rot heute"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r._measurement == \"climate_stats\")\r\n  |> filter(fn: (r) => r._field == \"green_s_today\")\r\n  |> last()\r\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r._measurement == \"climate_stats\")\r\n  |> filter(fn: (r) => r._field == \"yellow_s_today\")\r\n  |> last()\r\n",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r._measurement == \"climate_stats\")\r\n  |> filter(fn: (r) => r._field == \"red_s_today\")\r\n  |> last()\r\n",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "refId": "D"
+        }
+      ],
+      "title": "Ampelphasen / Tag",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cfaymyvszcpoge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dtdurations"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "green_s_week"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Grün Woche"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "yellow_s_week"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Gelb Woche"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "red_s_week"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Rot Woche"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r._measurement == \"climate_stats\")\r\n  |> filter(fn: (r) => r._field == \"green_s_week\")\r\n  |> last()\r\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r._measurement == \"climate_stats\")\r\n  |> filter(fn: (r) => r._field == \"yellow_s_week\")\r\n  |> last()\r\n",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"iot\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r._measurement == \"climate_stats\")\r\n  |> filter(fn: (r) => r._field == \"red_s_week\")\r\n  |> last()\r\n",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cfaymyvszcpoge"
+          },
+          "hide": false,
+          "query": "",
+          "refId": "D"
+        }
+      ],
+      "title": "Ampelphasen / Woche",
+      "type": "stat"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Ampel_1",
+  "uid": "ffbpsi0rnn5s0f",
+  "version": 12,
+  "weekStart": ""
+}
