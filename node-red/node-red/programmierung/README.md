@@ -1,19 +1,11 @@
 # Node-RED Programmierung
 
-Dieser Ordner dokumentiert die logische Struktur der Node-RED Flows.
+Dieser Ordner enthält drei JavaScript-Dateien.
 
-## Struktur
+Sie repräsentieren die implementierten Function-Nodes innerhalb von Node-RED:
 
-- MQTT Input
-- JSON Parsing
-- Logik-Funktion
-- InfluxDB Formatierung
-- HTTP Weiterleitung
-- Debug Nodes
+- `accumulate_durations.js`
+- `compute_advice_traffic.js`
+- `email-versand.js`
 
-## Hinweise
-
-Die vollständigen Flows befinden sich in:
-`node-red/flows.json`
-
-Dieser Ordner dient zur strukturellen und inhaltlichen Dokumentation.
+Die Dateien dokumentieren die Logik des Systems und sind funktional Bestandteil der Node-RED-Flow-Implementierung.
