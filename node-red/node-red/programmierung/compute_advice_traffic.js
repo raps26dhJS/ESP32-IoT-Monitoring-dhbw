@@ -96,10 +96,6 @@ msg.payload = {
   temp_c: temp,
   hum_pct: hum,
 
-  // werden aktuell nicht mehr logisch berechnet, bleiben aber als kompatible Felder erhalten
-  advice_ventilate: 0,
-  advice_heat: 0,
-
   traffic: traffic,
   traffic_text: trafficText,
 };
