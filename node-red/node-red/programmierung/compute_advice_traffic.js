@@ -42,10 +42,6 @@ if (TEST_MODE) {
     temp_c: temp,
     hum_pct: hum,
 
-    // Felder bleiben bewusst bestehen
-    advice_ventilate: 0,
-    advice_heat: 0,
-
     traffic: FORCE,
     traffic_text: ["green", "yellow", "red"][FORCE] || "green",
     reason: FORCE === 1 ? "TEST_YELLOW" : (FORCE === 2 ? "TEST_RED" : "TEST_GREEN")
