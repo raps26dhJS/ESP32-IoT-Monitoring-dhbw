@@ -4,31 +4,31 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-// ---------- DHT ----------
+// ---------- DHT11 ---------------------
 #define DHTPIN 14
 #define DHTTYPE DHT11
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
-// ---------- WIFI / MQTT ----------
-const char* WIFI_SSID     = "";
-const char* WIFI_PASSWORD = "";
+// ---------- WIFI / MQTT -----
+const char* WIFI_SSID     = "Vodafone-124B";
+const char* WIFI_PASSWORD = "PtEenQABPUdGCFQt";
 
 const char* MQTT_HOST = "192.168.0.107";
 const uint16_t MQTT_PORT = 1883;
 
 const char* MQTT_USER = "esp32";
-const char* MQTT_PASS = "";
+const char* MQTT_PASS = "dhbw26";
 
 const char* MQTT_TOPIC = "sensors/esp32/dht11";
 
-// ---------- Timing ----------
+// ---------- Zeitintervalll ----------
 const unsigned long READ_INTERVAL_MS = 20000UL;
 unsigned long lastReadMs = 0;
 
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
 
-// 1) DHT lesen (Messwerte: Temp und Hum)
+// 1) DHT11 lesen (Messwerte: Temp und Hum)
 bool readDht(float &tempC, float &humPct) {
   sensors_event_t e;
 
@@ -43,7 +43,7 @@ bool readDht(float &tempC, float &humPct) {
   return true;
 }
 
-// 2) Werte zuerst seriell ausgeben
+// 2) Werte seriell ausgeben
 void printValues(float t, float h) {
   Serial.print("Temperature: ");
   Serial.print(t);
@@ -54,7 +54,7 @@ void printValues(float t, float h) {
   Serial.println("%");
 }
 
-// 3) WLAN verbinden (mit Timeout)
+// 3) WLAN verbinden
 bool ensureWiFi(uint32_t timeoutMs = 15000) {
   if (WiFi.status() == WL_CONNECTED) return true;
 
@@ -77,7 +77,7 @@ bool ensureWiFi(uint32_t timeoutMs = 15000) {
   return true;
 }
 
-// 4) MQTT verbinden (mit Timeout)
+// 4) MQTT verbinden
 bool ensureMQTT(uint32_t timeoutMs = 8000) {
   if (mqtt.connected()) return true;
 
@@ -126,7 +126,7 @@ void setup() {
   Serial.println("\n--- DHT11 -> Serial -> MQTT ---");
 
   dht.begin();
-  lastReadMs = millis() - READ_INTERVAL_MS; //erste Messung
+  lastReadMs = millis() - READ_INTERVAL_MS; //Messung
 }
 
 void loop() {
