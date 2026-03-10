@@ -7,5 +7,3 @@ Hardware:
 - DHT11 sensor
 - MQTT communication
 
-Framework:
-- ESP-IDF / Arduino (adjust if needed)
